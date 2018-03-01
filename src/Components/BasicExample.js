@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 
 import Home from './Home'
+import Navbar from './Navbar'
 
 const About = () => (
   <div className="container">
@@ -51,22 +52,9 @@ const Topics = ({ match }) => (
 const BasicExample = () => (
   <Router>
     <div>
-    <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-      <a className="navbar-brand" href="/">C3budiman</a>
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          <a className="nav-link" href="/">Home</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/about">About</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/topics">Topics</a>
-        </li>
-      </ul>
-    </nav>
+    <Navbar />
     <br />
-
+    
       <Route exact path="/" component={Home}/>
       <Route path="/about" component={About}/>
       <Route path="/topics" component={Topics}/>
