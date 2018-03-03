@@ -7,6 +7,7 @@ import {
 
 import Home from './Home'
 import Navbar from './Navbar'
+import FormLogin from './FormLogin'
 
 const About = () => (
   <div className="container">
@@ -54,10 +55,10 @@ const BasicExample = () => (
     <div>
     <Navbar />
     <br />
-    
       <Route exact path="/" component={Home}/>
       <Route path="/about" component={About}/>
       <Route path="/topics" component={Topics}/>
+      <Route path="/login" component={FormLogin}/>
     </div>
   </Router>
 )

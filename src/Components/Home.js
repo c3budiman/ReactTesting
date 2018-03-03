@@ -1,7 +1,6 @@
 import React from 'react'
 import { ListNama } from './ListNama';
 import Users from './Users'
-import Login from './Login'
 
 
 class Home extends React.Component {
@@ -29,7 +28,6 @@ class Home extends React.Component {
       </h2>
       <ListNama name={this.state.name} onChange={this.changeName} />
       <Users />
-      <Login />
       </div>
     )
   }

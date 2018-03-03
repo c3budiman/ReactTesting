@@ -1,13 +1,12 @@
 import React from 'react';
-import UserProfile from './UserProfile';
 
 class Login extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = { Token: '', Type: '', TTL : '' }
   }
 
-  Login() {
+  Login(eml, pwd) {
     fetch('http://localhost:8000/api/auth/login/', {
       method: 'POST',
       headers: {
@@ -15,8 +14,8 @@ class Login extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: 'makarov@gmail.com',
-        password: '123456',
+        email: eml,
+        password: pwd,
       })
     }).then(access_token => { return access_token.json() })
       .then(datanya => {
@@ -24,17 +23,25 @@ class Login extends React.Component {
         let Type = datanya.token_type;
         let TTL = datanya.expires_in;
         this.setState({Token: Token, Type: Type, TTL: TTL});
+        console.log(this.state.Token);
       })
   }
 
-  componentDidMount() {
-    this.Login();
-  }
+  // componentDidUpdate() {
+  //    this.Login(this.props.email, this.props.password);
+  // }
+
+  // componentWillUpdate() {
+  //   this.Login(this.props.email, this.props.password);
+  // }
 
   render() {
     return(
-      <div>
-      <UserProfile token={this.state.Token} />
+      <div className="container">
+        <div className="row">
+        tes {this.props.email}
+        {this.state.Token}
+        </div>
       </div>
     )
   }
