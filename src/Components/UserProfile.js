@@ -1,10 +1,13 @@
 import React from 'react';
 import Cookies from 'js-cookie';
+import FormLogin from './FormLogin';
+
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {Nama : '', Email : '', Posts: []};
+    this.state = {Nama : '', Email : '', Posts: [],Loggedin: true};
+    this.LogoutFunc = this.LogoutFunc.bind(this);
   }
 
   GetUserInfo(tokenvar) {
@@ -26,43 +29,61 @@ class UserProfile extends React.Component {
               <div className="card-body">{pic.post}</div>
               <div className="card-footer"><span className="badge badge-light">{pic.published}</span></div>
             </div>
-            ,
+            <div style={{marginBottom: 20}}> </div>
             </div>
           )
         })
-        this.setState({Nama: nama, Email: email, Posts: posts});
+        this.setState({Nama: nama, Email: email, Posts: posts, Loggedin: true});
       })
   }
 
   componentDidMount() {
     let tokenvar = "Bearer " + Cookies.get('access_token');
     this.GetUserInfo(tokenvar);
+  }
 
+  LogoutFunc() {
+    let tokenvar = "Bearer " + Cookies.get('access_token');
+    Cookies.remove('access_token');
+    fetch('http://localhost:8000/api/auth/logout', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': tokenvar,
+      }
+    }).then(access_token => { return access_token.json() })
+      .then(datanya => {
+        console.log(datanya)
+      })
+      this.setState({Loggedin: false});
   }
 
   render() {
-    return(
-      <div>
-      <hr />
-      <div className="row">
-      <div className="col-md-6">
-          <div className="card">
-            <img className="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" />
-            <div className="card-body">
-              <h4 className="card-title">{this.state.Nama}</h4>
-              <p className="card-text">{this.state.Email}</p>
-              <a href="/logout" className="btn btn-primary">Log Out</a>
+    if (this.state.Loggedin) {
+      return(
+        <div>
+        <div className="row">
+        <div className="col-md-4">
+            <div className="card">
+              <img className="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card" />
+              <div className="card-body">
+                <h4 className="card-title">{this.state.Nama}</h4>
+                <p className="card-text">{this.state.Email}</p>
+                <button onClick={this.LogoutFunc} className="btn btn-primary">Log Out</button>
+              </div>
             </div>
           </div>
+          <div className="col-md-8">
+          <h2> Status Timeline Kamu : </h2>
+          {this.state.Posts}
+          </div>
         </div>
-        <div className="col-md-6">
-        <h2> Status Timeline Kamu : </h2>
-        {this.state.Posts}
         </div>
-      </div>
-      </div>
+      )
+    } else {
+      return( <div> <FormLogin /> </div>)
+    }
 
-    )
   }
 }
 

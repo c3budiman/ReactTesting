@@ -21,7 +21,7 @@ class Navbar extends React.Component {
               <a className="nav-link" href="/topics">Topics</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/login">Login</a>
+              <a className="nav-link" href="/profil">Profil</a>
             </li>
           </ul>
         </div>

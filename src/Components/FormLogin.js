@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 class FormLogin extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: '', password: '', emailfix: '', passwordfix: '', Loggedin: false};
+    this.state = {email: '', password: '', emailfix: '', passwordfix: ''};
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,8 +40,8 @@ class FormLogin extends React.Component {
         let Token = datanya.access_token;
         let Type = datanya.token_type;
         let TTL = datanya.expires_in;
-        Cookies.set('access_token', Token);
-        this.setState({Token: Token, Type: Type, TTL: TTL, Loggedin: true});
+        Cookies.set('access_token', Token, { expires: 7 });
+        this.setState({Token: Token, Type: Type, TTL: TTL});
       })
   }
 
@@ -54,12 +54,6 @@ class FormLogin extends React.Component {
     if (Cookies.get('access_token') != null) {
       return (
         <div className="container">
-          <div className="alert alert-success alert-dismissible fade show" role="alert">
-            <h1> Anda berhasil Login </h1>
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
           <UserProfile Token={Cookies.get('access_token')} />
         </div>
       )
